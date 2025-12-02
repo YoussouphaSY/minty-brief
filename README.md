@@ -1,73 +1,193 @@
-# Welcome to your Lovable project
+# Portail Employé
 
-## Project info
+Application web de gestion de présence pour employés, construite avec React, TypeScript, Tailwind CSS et Vite.
 
-**URL**: https://lovable.dev/projects/8d776bba-cee5-42fd-b60e-39af89f9bb66
+## 🎯 Fonctionnalités
 
-## How can I edit this code?
+- **Connexion simulée** - Authentification locale sans backend
+- **Dashboard** - Vue d'ensemble de la présence, statistiques et notifications
+- **Profil employé** - Informations personnelles et professionnelles
+- **Justification d'absence** - Formulaire avec date, motif et upload optionnel
+- **Design responsive** - Interface adaptée mobile, tablette et desktop
 
-There are several ways of editing your application.
+## 🎨 Design
 
-**Use Lovable**
+- **Palette de couleurs** : Vert (#10B981) et blanc uniquement
+- **Style** : Moderne et épuré avec des cartes blanches à bords arrondis
+- **Typographie** : Police Inter pour une lisibilité optimale
+- **Responsive** : Adaptatif de mobile à desktop
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8d776bba-cee5-42fd-b60e-39af89f9bb66) and start prompting.
+## 🚀 Installation et démarrage
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prérequis
+- Node.js (v16 ou supérieur)
+- npm ou yarn
 
-**Use your preferred IDE**
+### Étapes d'installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+```bash
+# 1. Cloner le projet
+git clone <votre-url-git>
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+# 2. Accéder au dossier du projet
+cd portail-employe
 
-Follow these steps:
+# 3. Installer les dépendances
+npm install
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Lancer l'application en mode développement
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+L'application sera accessible à l'adresse : `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🔐 Connexion
 
-**Use GitHub Codespaces**
+**Important** : Cette application fonctionne entièrement en local avec des données mockées. **Aucun compte Supabase ou backend externe n'est nécessaire**.
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Pour vous connecter à l'application :
 
-## What technologies are used for this project?
+**Email** : `manga@example.com`  
+**Mot de passe** : `password123`
 
-This project is built with:
+Ces identifiants sont définis dans le fichier `src/data/mockData.ts` et peuvent être modifiés selon vos besoins.
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📁 Structure du projet
 
-## How can I deploy this project?
+```
+portail-employe/
+├── src/
+│   ├── components/          # Composants réutilisables
+│   │   ├── Navigation.tsx   # Barre de navigation
+│   │   └── ui/              # Composants UI (shadcn)
+│   ├── pages/               # Pages de l'application
+│   │   ├── Login.tsx        # Page de connexion
+│   │   ├── Dashboard.tsx    # Tableau de bord
+│   │   ├── Profile.tsx      # Profil employé
+│   │   └── Justification.tsx # Formulaire de justification
+│   ├── data/
+│   │   └── mockData.ts      # Données mockées (utilisateur, stats, etc.)
+│   ├── hooks/               # Hooks React personnalisés
+│   ├── lib/                 # Utilitaires
+│   └── index.css            # Styles globaux et design system
+├── public/                  # Fichiers statiques
+└── package.json             # Dépendances du projet
+```
 
-Simply open [Lovable](https://lovable.dev/projects/8d776bba-cee5-42fd-b60e-39af89f9bb66) and click on Share -> Publish.
+## 💾 Données et stockage
 
-## Can I connect a custom domain to my Lovable project?
+### Pas de backend requis
 
-Yes, you can!
+Cette application fonctionne **100% en local** :
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+- ✅ **Données mockées** : Toutes les données sont stockées dans `src/data/mockData.ts`
+- ✅ **Authentification locale** : Vérification des identifiants côté client uniquement
+- ✅ **Pas de serveur** : Aucun backend, API ou base de données externe n'est utilisé
+- ✅ **Pas de compte Supabase** : Vous n'avez **PAS** besoin de créer un compte Supabase ou de configurer une base de données
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+### Comment modifier les données
+
+Pour personnaliser les données de l'application, éditez le fichier `src/data/mockData.ts` :
+
+```typescript
+// Modifier l'utilisateur
+export const mockUser = {
+  name: "Votre Nom",
+  email: "votre@email.com",
+  password: "votremotdepasse",
+  job: "Votre Poste",
+  phone: "Votre Numéro"
+};
+
+// Modifier les statistiques de présence
+export const presenceStats = {
+  presenceRate: 85,
+  presents: 20,
+  absents: 3
+};
+
+// Ajouter/modifier des pointages
+export const pointageRecords = [
+  { date: "2025-12-02", arrival: "08:15", departure: "17:00", status: "Présent" },
+  // ... ajoutez vos propres enregistrements
+];
+
+// Ajouter/modifier des notifications
+export const notifications = [
+  { id: 1, message: "Votre message ici" },
+  // ... ajoutez vos propres notifications
+];
+```
+
+## 🛠️ Technologies utilisées
+
+- **React 18** - Framework JavaScript
+- **TypeScript** - Typage statique
+- **Vite** - Build tool ultra-rapide
+- **Tailwind CSS** - Framework CSS utilitaire
+- **shadcn/ui** - Composants UI accessibles
+- **React Router** - Gestion des routes
+- **Lucide React** - Icônes
+- **date-fns** - Gestion des dates
+
+## 📱 Responsivité
+
+L'application est entièrement responsive avec des breakpoints adaptés :
+
+- **Mobile** : < 640px
+- **Tablet** : 640px - 1024px
+- **Desktop** : > 1024px
+
+Tous les écrans sont optimisés pour une expérience fluide sur tous les appareils.
+
+## 🎨 Personnalisation du design
+
+Le design system est centralisé dans `src/index.css` et `tailwind.config.ts`. Pour modifier les couleurs :
+
+1. **index.css** : Variables CSS (HSL)
+2. **tailwind.config.ts** : Configuration Tailwind avec les couleurs personnalisées
+
+## 📦 Scripts disponibles
+
+```bash
+# Démarrer en mode développement
+npm run dev
+
+# Compiler pour la production
+npm run build
+
+# Prévisualiser la build de production
+npm run preview
+
+# Linter le code
+npm run lint
+```
+
+## 🚀 Déploiement
+
+Pour déployer l'application :
+
+```bash
+# 1. Créer le build de production
+npm run build
+
+# 2. Le dossier 'dist' contient l'application prête à déployer
+# Vous pouvez le déployer sur :
+# - Vercel
+# - Netlify
+# - GitHub Pages
+# - Lovable.dev
+# - Ou tout autre hébergeur de fichiers statiques
+```
+
+## 📄 Licence
+
+Ce projet est libre de droits pour usage personnel et professionnel.
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou une pull request.
+
+---
+
+**Note importante** : Cette application est conçue pour fonctionner entièrement en local sans aucune dépendance externe. Aucune configuration de backend, base de données ou service tiers n'est nécessaire.
