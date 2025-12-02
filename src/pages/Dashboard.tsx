@@ -1,9 +1,13 @@
 import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 import { presenceStats, pointageRecords, notifications, mockUser } from "@/data/mockData";
-import { CheckCircle2, XCircle, Clock, Bell } from "lucide-react";
+import { CheckCircle2, XCircle, Clock, Bell, AlertCircle } from "lucide-react";
 import Navigation from "@/components/Navigation";
+import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="min-h-screen bg-background">
       <Navigation />
@@ -17,34 +21,44 @@ const Dashboard = () => {
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
-          <Card className="p-4 sm:p-6 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8">
+          <Card className="p-3 sm:p-4 bg-gradient-to-br from-primary to-primary/80 text-primary-foreground shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs sm:text-sm opacity-90 mb-1">Taux de présence</p>
-                <p className="text-3xl sm:text-4xl font-bold">{presenceStats.presenceRate}%</p>
+                <p className="text-xs opacity-90 mb-1">Taux de présence</p>
+                <p className="text-2xl sm:text-3xl font-bold">{presenceStats.presenceRate}%</p>
               </div>
-              <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 opacity-80" />
+              <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 opacity-80" />
             </div>
           </Card>
 
-          <Card className="p-4 sm:p-6 shadow-lg">
+          <Card className="p-3 sm:p-4 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-1">Jours présents</p>
-                <p className="text-3xl sm:text-4xl font-bold text-primary">{presenceStats.presents}</p>
+                <p className="text-xs text-muted-foreground mb-1">Jours présents</p>
+                <p className="text-2xl sm:text-3xl font-bold text-primary">{presenceStats.presents}</p>
               </div>
-              <CheckCircle2 className="w-10 h-10 sm:w-12 sm:h-12 text-primary" />
+              <CheckCircle2 className="w-8 h-8 sm:w-10 sm:h-10 text-primary" />
             </div>
           </Card>
 
-          <Card className="p-4 sm:p-6 shadow-lg">
+          <Card className="p-3 sm:p-4 shadow-lg">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-xs sm:text-sm text-muted-foreground mb-1">Jours absents</p>
-                <p className="text-3xl sm:text-4xl font-bold text-destructive">{presenceStats.absents}</p>
+                <p className="text-xs text-muted-foreground mb-1">Jours absents</p>
+                <p className="text-2xl sm:text-3xl font-bold text-destructive">{presenceStats.absents}</p>
               </div>
-              <XCircle className="w-10 h-10 sm:w-12 sm:h-12 text-destructive" />
+              <XCircle className="w-8 h-8 sm:w-10 sm:h-10 text-destructive" />
+            </div>
+          </Card>
+
+          <Card className="p-3 sm:p-4 shadow-lg">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs text-muted-foreground mb-1">Jours retard</p>
+                <p className="text-2xl sm:text-3xl font-bold text-yellow-600">{presenceStats.lates}</p>
+              </div>
+              <AlertCircle className="w-8 h-8 sm:w-10 sm:h-10 text-yellow-600" />
             </div>
           </Card>
         </div>
@@ -86,12 +100,22 @@ const Dashboard = () => {
 
           {/* Notifications */}
           <Card className="p-4 sm:p-6 shadow-lg">
-            <h2 className="text-lg sm:text-xl font-semibold mb-4 flex items-center gap-2">
-              <Bell className="w-5 h-5 text-primary" />
-              Notifications
-            </h2>
+            <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2">
+                <Bell className="w-5 h-5 text-primary" />
+                Notifications
+              </h2>
+              <Button 
+                variant="ghost" 
+                size="sm"
+                onClick={() => navigate("/notifications")}
+                className="text-primary hover:text-primary/80"
+              >
+                Voir tout
+              </Button>
+            </div>
             <div className="space-y-3">
-              {notifications.map((notification) => (
+              {notifications.slice(0, 3).map((notification) => (
                 <div
                   key={notification.id}
                   className="p-3 sm:p-4 bg-primary/5 border-l-4 border-primary rounded-lg"
