@@ -7,6 +7,8 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import Profile from "./pages/Profile";
 import Justification from "./pages/Justification";
+import Notifications from "./pages/Notifications";
+import JustificationsHistory from "./pages/JustificationsHistory";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +48,22 @@ const App = () => (
             element={
               <ProtectedRoute>
                 <Justification />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/notifications"
+            element={
+              <ProtectedRoute>
+                <Notifications />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/justifications-history"
+            element={
+              <ProtectedRoute>
+                <JustificationsHistory />
               </ProtectedRoute>
             }
           />

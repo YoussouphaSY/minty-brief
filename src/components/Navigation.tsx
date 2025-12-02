@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Home, User, FileText, LogOut } from "lucide-react";
+import { Home, User, FileText, LogOut, History } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const Navigation = () => {
@@ -16,6 +16,7 @@ const Navigation = () => {
     { path: "/dashboard", icon: Home, label: "Dashboard" },
     { path: "/profile", icon: User, label: "Profil" },
     { path: "/justification", icon: FileText, label: "Justification" },
+    { path: "/justifications-history", icon: History, label: "Historique" },
   ];
 
   return (
