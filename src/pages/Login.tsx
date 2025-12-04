@@ -4,32 +4,39 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { mockUser } from "@/data/mockData";
 import { useToast } from "@/hooks/use-toast";
 import { UserCircle } from "lucide-react";
+import { authService } from "@/services/authService";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [matricule, setMatricule] = useState("");
+  const [telephone, setTelephone] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (email === mockUser.email && password === mockUser.password) {
-      localStorage.setItem("isAuthenticated", "true");
-      toast({
-        title: "Connexion réussie",
-        description: `Bienvenue ${mockUser.name}`,
-      });
-      navigate("/dashboard");
-    } else {
+    setIsLoading(true);
+
+    try {
+      const authUser = await authService.login({ matricule, telephone });
+
+      if (authUser) {
+        toast({
+          title: "Connexion réussie",
+          description: `Bienvenue ${authUser.agent.prenom} ${authUser.agent.nom}`,
+        });
+        navigate("/dashboard");
+      }
+    } catch (error: any) {
       toast({
         title: "Erreur de connexion",
-        description: "Email ou mot de passe incorrect",
+        description: error.message || "Matricule ou numéro de téléphone incorrect",
         variant: "destructive",
       });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -46,33 +53,38 @@ const Login = () => {
 
         <form onSubmit={handleLogin} className="space-y-6">
           <div className="space-y-2">
-            <Label htmlFor="email">Email</Label>
+            <Label htmlFor="matricule">Matricule</Label>
             <Input
-              id="email"
-              type="email"
-              placeholder="manga@example.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              id="matricule"
+              type="text"
+              placeholder="MAT001"
+              value={matricule}
+              onChange={(e) => setMatricule(e.target.value)}
               required
               className="w-full"
+              disabled={isLoading}
             />
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password">Mot de passe</Label>
+            <Label htmlFor="telephone">Numéro de téléphone</Label>
             <Input
-              id="password"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              id="telephone"
+              type="tel"
+              placeholder="77 123 45 67"
+              value={telephone}
+              onChange={(e) => setTelephone(e.target.value)}
               required
               className="w-full"
+              disabled={isLoading}
             />
+            <p className="text-xs text-muted-foreground">
+              Entrez votre numéro tel qu'enregistré dans le système
+            </p>
           </div>
 
-          <Button type="submit" className="w-full">
-            Se connecter
+          <Button type="submit" className="w-full" disabled={isLoading}>
+            {isLoading ? "Connexion..." : "Se connecter"}
           </Button>
         </form>
       </Card>

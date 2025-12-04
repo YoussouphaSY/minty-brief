@@ -25,7 +25,7 @@ const Navigation = () => {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-primary rounded-full" />
-            <span className="font-semibold text-foreground">Portail RH</span>
+            <span className="font-semibold text-foreground">Mangui Fii</span>
           </div>
 
           <div className="flex items-center gap-2">
