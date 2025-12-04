@@ -95,9 +95,9 @@ export const pointagesService = {
      * Mettre à jour un pointage
      */
     async updatePointage(id: string, updates: PointageUpdate): Promise<Pointage> {
-        const { data, error } = await supabase
-            .from('pointages')
-            .update(updates as any)
+        const { data, error } = await (supabase
+            .from('pointages') as any)
+            .update(updates)
             .eq('id', id)
             .select()
             .single();
@@ -107,7 +107,7 @@ export const pointagesService = {
             throw error;
         }
 
-        return data;
+        return data as Pointage;
     },
 
     /**

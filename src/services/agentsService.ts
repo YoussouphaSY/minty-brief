@@ -68,7 +68,7 @@ export const agentsService = {
     async createAgent(agent: AgentInsert): Promise<Agent> {
         const { data, error } = await supabase
             .from('agents')
-            .insert(agent)
+            .insert(agent as any)
             .select()
             .single();
 
@@ -77,15 +77,15 @@ export const agentsService = {
             throw error;
         }
 
-        return data;
+        return data as Agent;
     },
 
     /**
      * Mettre à jour un agent
      */
     async updateAgent(id: string, updates: AgentUpdate): Promise<Agent> {
-        const { data, error } = await supabase
-            .from('agents')
+        const { data, error } = await (supabase
+            .from('agents') as any)
             .update(updates)
             .eq('id', id)
             .select()
@@ -96,7 +96,7 @@ export const agentsService = {
             throw error;
         }
 
-        return data;
+        return data as Agent;
     },
 
     /**

@@ -88,7 +88,7 @@ export const congesService = {
     async createConge(conge: CongeInsert): Promise<Conge> {
         const { data, error } = await supabase
             .from('conges')
-            .insert(conge)
+            .insert(conge as any)
             .select()
             .single();
 
@@ -97,15 +97,15 @@ export const congesService = {
             throw error;
         }
 
-        return data;
+        return data as Conge;
     },
 
     /**
      * Mettre à jour un congé
      */
     async updateConge(id: number, updates: CongeUpdate): Promise<Conge> {
-        const { data, error } = await supabase
-            .from('conges')
+        const { data, error } = await (supabase
+            .from('conges') as any)
             .update(updates)
             .eq('id', id)
             .select()
@@ -116,7 +116,7 @@ export const congesService = {
             throw error;
         }
 
-        return data;
+        return data as Conge;
     },
 
     /**
